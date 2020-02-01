@@ -10,6 +10,6 @@ exports.list_all_roles = function (req, res) {
 };
 
 exports.read_a_role = function (req, res) {
-  let sqlQuery = `select * from dbo.[Role] where id = ${req.params.userId}`;
+  let sqlQuery = `select * from dbo.[Role] where id = ${req.params.roleId}`;
   return requestHandler.handle(req, res, sqlQuery)
 };

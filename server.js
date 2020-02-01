@@ -6,8 +6,20 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var routes = require('./api/routes/userRoutes'); //importing route
-routes(app); //register the route
+var issueRoute = require('./api/routes/issueRoutes'); //importing route
+var priorityRoute = require('./api/routes/priorityRoutes'); //importing route
+var projectRoute = require('./api/routes/projectRoutes'); //importing route
+var roleRoute = require('./api/routes/roleRoutes'); //importing route
+var severityRoute = require('./api/routes/severityRoutes'); //importing route
+var statusRoute = require('./api/routes/statusRoutes'); //importing route
+var userRoute = require('./api/routes/userRoutes'); //importing route
+issueRoute(app); //register the route
+priorityRoute(app); //register the route
+projectRoute(app); //register the route
+roleRoute(app); //register the route
+severityRoute(app); //register the route
+statusRoute(app); //register the route
+userRoute(app); //register the route
 
 
 app.use(function(req, res) {

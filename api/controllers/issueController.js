@@ -22,5 +22,7 @@ exports.update_a_issue = function (req, res) {
   let sqlQuery = `UPDATE dbo.[Issue]
   SET password = '${req.body.password}'
   WHERE Id = ${req.params.userId}`;
-  return requestHandler.handle(req, res, sqlQuery)
+  requestHandler.handle(sqlQuery)
+    .then(data => res.send(data))
+    .catch(err => res.send(err))
 };

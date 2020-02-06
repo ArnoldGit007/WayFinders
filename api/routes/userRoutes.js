@@ -10,6 +10,7 @@ module.exports = function (app) {
   app.route('/users/:userId')
     .get(userController.read_a_user)
     .put(userController.update_a_user)
+    //.delete(userController.delete_a_user)
 
   app.route('/users/getByRole/:userRole')
     .get(userController.get_user_by_role)

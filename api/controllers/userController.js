@@ -1,6 +1,5 @@
 'use strict';
 
-//console.log(sql)
 var requestHandler = require('../Utilities/requestHandler')
 var APIResponse = require('../Utilities/common')
 
@@ -59,10 +58,16 @@ exports.activate_a_user = function (req, res) {
   }
 };
 exports.read_a_user = function (req, res) {
-  let sqlQuery = `select * from dbo.[User] where id = ${req.params.userId}`;
-  requestHandler.handle(sqlQuery)
-    .then(data => res.send(data))
-    .catch(err => res.send(err))
+  if (req.params.userId) {
+    let sqlQuery = `select * from dbo.[User] where id = ${req.params.userId}`;
+    requestHandler.handle(sqlQuery)
+      .then(data => res.send(data))
+      .catch(err => res.send(err))
+  } else {
+    APIResponse.IsSuccess = false
+    APIResponse.ErrorMessage = 'Please provide a valid model'
+    res.send(APIResponse)
+  }
 };
 
 exports.get_all_inactivated_user = function (req, res) {
@@ -94,18 +99,32 @@ exports.get_user_by_role = function (req, res) {
 
 
 exports.update_a_user = function (req, res) {
-  let sqlQuery = `UPDATE dbo.[User]
-  SET password = '${req.body.password}'
-  WHERE Id = ${req.params.userId}`;
-  requestHandler.handle(sqlQuery)
-    .then(data => res.send(data))
-    .catch(err => res.send(err))
+  const body = req.body;
+  if (req.params.userId && body && body.Password) {
+    let sqlQuery = `UPDATE dbo.[User]
+                    SET password = '${req.body.Password}'
+                    WHERE Id = ${req.params.userId}`;
+
+    requestHandler.handle(sqlQuery)
+      .then(data => res.send(data))
+      .catch(err => res.send(err))
+
+  } else {
+    APIResponse.IsSuccess = false
+    APIResponse.ErrorMessage = 'Please provide a valid model'
+    res.send(APIResponse)
+  }
 };
 
 exports.delete_a_user = function (req, res) {
-  let sqlQuery = `DELETE FROM dbo.[User] WHERE Id = ${req.params.userId}`;
-  requestHandler.handle(sqlQuery)
-    .then(data => res.send(data))
-    .catch(err => res.send(err))
+  if (req.params.userId) {
+    let sqlQuery = `DELETE FROM dbo.[User] WHERE Id = ${req.params.userId}`;
+    requestHandler.handle(sqlQuery)
+      .then(data => res.send(data))
+      .catch(err => res.send(err))
+  } else {
+    APIResponse.IsSuccess = false
+    APIResponse.ErrorMessage = 'Please provide a valid model'
+    res.send(APIResponse)
+  }
 };
-

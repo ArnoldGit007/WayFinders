@@ -12,14 +12,19 @@ exports.list_all_users = function (req, res) {
 
 exports.create_a_user = function (req, res) {
   const body = req.body;
-  if (body && body.Email && body.Password) {
+  if (body && body.FirstName && body.LastName && body.Email && body.Password) {
     let sqlQuery = `INSERT INTO dbo.[User] 
-                      ( Email,
+                      ( 
+                        FirstName,
+                        LastName,
+                        Email,
                         Password,
                         CreatedBy,
                         ModifiedBy
                       ) 
                     VALUES (
+                      '${body.FirstName.trim()}',
+                      '${body.LastName.trim()}',
                       '${body.Email.trim()}',
                       '${body.Password.trim()}',
                       1,

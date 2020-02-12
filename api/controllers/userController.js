@@ -64,7 +64,7 @@ exports.activate_a_user = function (req, res) {
 };
 exports.read_a_user = function (req, res) {
   if (req.params.userId) {
-    let sqlQuery = `SELECT U.*, R.Code from dbo.[User] U 
+    let sqlQuery = `SELECT U.*, R.Code AS RoleCode from dbo.[User] U 
             INNER JOIN UserRoleXREF UX
             ON U.Id = UX.UserId
             INNER JOIN Role R

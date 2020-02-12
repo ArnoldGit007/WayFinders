@@ -69,7 +69,7 @@ exports.read_a_user = function (req, res) {
             ON U.Id = UX.UserId
             INNER JOIN Role R
             ON R.Id = UX.RoleId  
-            where R.Id = ${req.params.userId}`;
+            where U.Id = ${req.params.userId}`;
     requestHandler.handle(sqlQuery)
       .then(data => res.send(data))
       .catch(err => res.send(err))

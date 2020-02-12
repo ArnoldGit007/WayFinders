@@ -64,7 +64,12 @@ exports.activate_a_user = function (req, res) {
 };
 exports.read_a_user = function (req, res) {
   if (req.params.userId) {
-    let sqlQuery = `select * from dbo.[User] where id = ${req.params.userId}`;
+    let sqlQuery = `SELECT U.*, R.Code from dbo.[User] U 
+            INNER JOIN UserRoleXREF UX
+            ON U.Id = UX.UserId
+            INNER JOIN Role R
+            ON R.Id = UX.RoleId  
+            where R.Id = ${req.params.userId}`;
     requestHandler.handle(sqlQuery)
       .then(data => res.send(data))
       .catch(err => res.send(err))
